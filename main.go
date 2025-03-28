@@ -179,7 +179,7 @@ func main() {
 				},
 			},
 		},
-		Footer: "Printed 2025, The Tech Chronicle Publishing Company | All Rights Reserved",
+		Footer: "Printed 2025, The Tech Chronicle Publishing Company | BSD3-licensed",
 	}
 
 	dynamicArticles, err := fetchAllNews()
