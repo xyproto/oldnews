@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="newspaper-container">
+        <canvas id="background-canvas"></canvas>
+        <canvas id="overlay-canvas"></canvas>
+
+        <div id="newspaper-content">
+            <header class="masthead">
+                <div class="newspaper-info">{{.IssueInfo}}</div>
+                <h1 class="newspaper-name">{{.NewspaperName}}</h1>
+                <p class="newspaper-motto">{{.Motto}}</p>
+                <div class="newspaper-info">
+                    <span>{{.Date}}</span>
+                    <span>{{.Price}}</span>
+                </div>
+            </header>
+
+            <div class="columns">
+                <div class="main-column">
+                    {{range $index, $article := .MainArticles}}
+                        <article class="article {{if eq $index 0}}main-article{{end}}">
+                            <h2 class="article-headline">{{$article.Headline}}</h2>
+                            {{if $article.Subheadline}}
+                                <h3 class="article-subheadline">{{$article.Subheadline}}</h3>
+                            {{end}}
+                            <p class="article-meta">{{$article.Byline}}</p>
+
+                            {{if $article.ImageURL}}
+                                <div class="article-content two-columns">
+                                    {{range $article.Paragraphs1}}
+                                        <p>{{.}}</p>
+                                    {{end}}
+                                </div>
+                                <div class="image-container">
+                                    <img src="{{$article.ImageURL}}" alt="{{$article.ImageAlt}}" class="newspaper-image">
+                                    <p class="image-caption">{{$article.ImageCaption}}</p>
+                                </div>
+                                <div class="article-content two-columns">
+                                    {{range $article.Paragraphs2}}
+                                        <p>{{.}}</p>
+                                    {{end}}
+                                </div>
+                            {{else}}
+                                <div class="article-content">
+                                    {{range $article.Content}}
+                                        <p>{{.}}</p>
+                                    {{end}}
+                                </div>
+                            {{end}}
+                        </article>
+                        {{if eq $index 0}}
+                            <div class="ornament"></div>
+                            <div class="double-separator"></div>
+                        {{else}}
+                            <div class="separator"></div>
+                        {{end}}
+                    {{end}}
+                </div>
+
+                <div class="side-column">
+                    {{range $index, $box := .SideBoxes}}
+                        {{if eq $box.Type "weather"}}
+                            <div class="textured-box">
+                                <h3 class="textured-box-title">{{$box.Title}}</h3>
+                                {{range $box.Lines}}
+                                    <p>{{.}}</p>
+                                {{end}}
+                            </div>
+                        {{else if eq $box.Type "advertisement"}}
+                            <div class="advertisement">
+                                <h3 class="advertisement-title">{{$box.Title}}</h3>
+                                {{range $box.Lines}}
+                                    <p class="advertisement-content">{{.}}</p>
+                                {{end}}
+                            </div>
+                        {{else if eq $box.Type "article"}}
+                            <article class="article">
+                                <h2 class="article-headline">{{$box.Title}}</h2>
+                                <p class="article-meta">{{$box.Byline}}</p>
+                                <div class="article-content">
+                                    {{range $box.Lines}}
+                                        <p>{{.}}</p>
+                                    {{end}}
+                                </div>
+                            </article>
+                        {{end}}
+                        {{if lt $index (sub (len $.SideBoxes) 1)}}
+                            <div class="separator"></div>
+                        {{end}}
+                    {{end}}
+                </div>
+            </div>
+
+            <div class="ornament"></div>
+            <footer>
+                <p>{{.Footer}}</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
