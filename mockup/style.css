@@ -1,0 +1,337 @@
+body {
+    background-color: #1a2633;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Georgia', serif;
+}
+
+        @keyframes subtle-flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+            85% { opacity: 1; }
+            86% { opacity: 0.97; }
+            87% { opacity: 1; }
+        }
+
+        @keyframes newspaperIntro {
+            0% {
+                transform-origin: center 15%;
+                transform: scale(0.02) rotate(0deg);
+                opacity: 0.1;
+                filter: grayscale(100%) sepia(50%) contrast(1.1) brightness(0.85);
+            }
+            100% {
+                transform-origin: center center;
+                transform: scale(1) rotate(1080deg);
+                opacity: 1;
+                filter: grayscale(0%) sepia(50%) contrast(1.1) brightness(0.85);
+            }
+        }
+
+        #newspaper-container {
+            position: relative;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.4);
+            background-color: #e6dfc8;
+            overflow: hidden;
+            filter: sepia(50%) contrast(1.1) brightness(0.85);
+            animation-name: newspaperIntro;
+            animation-duration: 3s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 0s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            will-change: transform;
+        }
+
+        #background-canvas, #overlay-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #overlay-canvas {
+            z-index: 2;
+            mix-blend-mode: multiply;
+        }
+
+        #newspaper-content {
+            position: relative;
+            z-index: 1;
+            padding: 30px;
+            color: #262014;
+            filter: blur(0.2px);
+            letter-spacing: 0.01em;
+        }
+
+        .newspaper-name {
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.8), 0.5px 0.5px 0 rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.03em;
+        }
+
+        .article-headline {
+            text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.7);
+            letter-spacing: 0.02em;
+        }
+
+        .article-content p {
+            text-shadow: 0 0 0.3px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+            font-variant-ligatures: common-ligatures;
+            word-spacing: 0.3px;
+        }
+
+        .newspaper-content {
+            background-image:
+                repeating-linear-gradient(to right, rgba(0,0,0,0.01) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px),
+                repeating-linear-gradient(to bottom, rgba(0,0,0,0.01) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px);
+        }
+
+        .ink-blot {
+            position: relative;
+            display: inline-block;
+        }
+
+        .ink-blot::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.15;
+            filter: blur(0.7px);
+            transform: scale(1.01);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: linear-gradient(45deg, #000 25%, transparent 25%),
+                            linear-gradient(-45deg, #000 25%, transparent 25%),
+                            linear-gradient(45deg, transparent 75%, #000 75%),
+                            linear-gradient(-45deg, transparent 75%, #000 75%);
+            background-size: 4px 4px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .masthead {
+            text-align: center;
+            border-bottom: 4px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .newspaper-name {
+            font-family: 'Times New Roman', serif;
+            font-size: 64px;
+            font-weight: bold;
+            margin: 0;
+            color: #000;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .newspaper-motto {
+            font-style: italic;
+            font-size: 16px;
+            margin: 5px 0 15px;
+            color: #333;
+        }
+
+        .newspaper-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #333;
+        }
+
+        .columns {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .main-column { flex: 7; }
+        .side-column { flex: 3; }
+
+        .article {
+            margin-bottom: 25px;
+        }
+
+        .article-headline {
+            font-family: 'Times New Roman', serif;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .main-article .article-headline {
+            font-size: 32px;
+            text-align: center;
+            width: 100%;
+            border-bottom: 2px solid #b9a978;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .article-subheadline {
+            font-style: italic;
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #444;
+            text-align: center;
+        }
+
+        .article-meta {
+            font-size: 12px;
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .article-content {
+            font-size: 16px;
+            text-align: justify;
+            line-height: 1.5;
+            color: #222;
+        }
+
+        .two-columns {
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        .article-content p:first-letter {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a3c31;
+        }
+
+        .separator {
+            height: 1px;
+            background-color: #b9a978;
+            margin: 20px 0;
+        }
+
+        .double-separator {
+            height: 4px;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            margin: 20px 0;
+        }
+
+        .ornament {
+            text-align: center;
+            font-size: 16px;
+            margin: 15px 0;
+            color: #4a3c31;
+            border-top: 1px dashed #8a7a54;
+            border-bottom: 1px dashed #8a7a54;
+            padding: 5px 0;
+            opacity: 0.7;
+        }
+
+        .textured-box, .advertisement {
+            border: 1px solid #b9a978;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #ede4cb;
+        }
+
+        .advertisement {
+            text-align: center;
+        }
+
+        .textured-box-title, .advertisement-title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #b9a978;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .advertisement-title {
+            font-family: 'Times New Roman', serif;
+            font-size: 18px;
+        }
+
+        .advertisement-content {
+            font-size: 14px;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .image-container {
+            width: 100%;
+            margin: 15px 0;
+            border: 1px solid #8a7a54;
+            background-color: #e6e6e6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newspaper-image {
+            width: 100%;
+            display: block;
+            filter: sepia(25%) contrast(1.05) brightness(0.95) grayscale(10%);
+            border-bottom: 1px solid #8a7a54;
+            opacity: 0.95;
+        }
+
+        .image-caption {
+            font-size: 12px;
+            font-style: italic;
+            text-align: center;
+            padding: 8px;
+            margin: 0;
+            color: #444;
+            background-color: #e8d9a5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            border-top: 3px double #333;
+            padding-top: 10px;
+            color: #333;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .columns {
+                flex-direction: column;
+            }
+
+            .two-columns {
+                column-count: 1;
+            }
+
+            .newspaper-name {
+                font-size: 40px;
+            }
+
+            #newspaper-content {
+                padding: 15px;
+            }
+        }
